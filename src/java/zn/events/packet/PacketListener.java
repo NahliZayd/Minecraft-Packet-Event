@@ -15,8 +15,8 @@ public class PacketListener extends ChannelDuplexHandler {
     if (msg instanceof Packet) {
       PacketEvent.In packetEvent = new PacketEvent.In((Packet < ? > ) msg);
       MinecraftForge.EVENT_BUS.post(packetEvent);
-      if (!inPacket.isCanceled()) {
-        msg = inPacket.getPacket();
+      if (!packetEvent.isCanceled()) {
+        msg = packetEvent.getPacket();
         super.channelRead(ctx, msg);
       }
     }
@@ -27,8 +27,8 @@ public class PacketListener extends ChannelDuplexHandler {
     if (msg instanceof Packet) {
       PacketEvent.Out packetEvent = new PacketEvent.Out((Packet < ? > ) msg);
       MinecraftForge.EVENT_BUS.post(packetEvent);
-      if (!outPacket.isCanceled()) {
-        msg = outPacket.getPacket();
+      if (!packetEvent.isCanceled()) {
+        msg = packetEvent.getPacket();
         super.write(ctx, msg, promise);
       }
     }
